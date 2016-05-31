@@ -6,7 +6,7 @@ env RAILS_ENV=<%= @deploy[:rails_env] %>
 
 chdir <%= @deploy[:deploy_to] %>/current
 
-exec su - deploy -c 'VERBOSE=true bundle exec rake resque:scheduler >> <%=@deploy[:deploy_to]%>/current/log/resque-scheduler-<%="#{@application}-#{@deploy[:rails_env]}"%>.log 2>&1'
+exec su -u deploy -E -- bundle exec rake resque:scheduler >> <%=@deploy[:deploy_to]%>/current/log/resque-scheduler-<%="#{@application}-#{@deploy[:rails_env]}"%>.log 2>&1
 
 start on runlevel [2345]
 
